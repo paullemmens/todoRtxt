@@ -7,6 +7,7 @@ done.raw <- readLines(con = file.path(todo.dir, 'done.txt'), encoding = 'UTF-8')
 
 # This file in the repo of Simpletask cloudless shows the patterns that author 
 # uses to get thing working.
+# FIXME: retrieve link.
 prefix.map <- data.frame(str_match(todo.raw, '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)'),
                          stringsAsFactors = FALSE)
 names(prefix.map)[-6] <- c('orig.task', 'done', 'prio', 'd.compl', 'd.ent', 'clean.task')
@@ -18,35 +19,36 @@ thr.ptrn <- '( [Tt]:\\d{4}-\\d{2}-\\d{2})?'
 thr.dates <- str_extract(todo.raw, thr.ptrn)
 rec.ptrn <- '( [Rr][Ee][Cc]:\\d+[dDwWmMyY])?'
 rec.dates <- str_extract(todo.raw, rec.ptrn)
+tasks <- cbind(prefix.map, data.frame(due = due.dates, threshold = thr.dates, recurrence = rec.dates))
 
-
-# FIXME: blijven steken bij het optimaliseren/goed maken van het dates.map patroon.
-# in de oude situatie reageerde het maar op 1 van de 3 (sub)patronen in de expressie.
-# Zoals het patroon hieronder staat, match het wel alles, maar alleen die items die alles hebben staan.
-dates.map <- data.frame(str_match(todo.raw, '( [Dd][Uu][Ee]:\\d{4}-\\d{2}-\\d{2})?.*( [Tt]:\\d{4}-\\d{2}-\\d{2})?'), #?.*( [Rr][Ee][Cc]:\\d+[dDwWmMyY])?'),
-                        stringsAsFactors = FALSE)
-#names(dates.map) <- c()
+# Helper function to create an array of strings containing the list and tag 
+# identifiers.
+get.strings <- function(string, pattern) {
+  map <- str_extract_all(string, pattern)
+  res <- do.call('c',
+                 lapply(map, 
+                        function(mm) {
+                          ifelse(length(mm) == 0, '', gsub(' ', '', 
+                                                           paste0(mm, 
+                                                                  collapse = ',')))
+                        }))
+  return(res)
+}
 
 # This gives a list that needs to be flattened down.
-tag.map <- str_match_all(todo.raw , '( \\+\\w+)')
-list.map <- str_match_all(todo.raw , '( \\@\\w+)')
+tags <- get.strings(todo.raw, '( \\+\\w+)')
+lists <- get.strings(todo.raw, '( \\@\\w+)')
 
 # This results in 'half a data.frame' that does have vectors/c()'s as row elements,
 # but perhaps a list of lists makes more sense.
 # FIXME: needs to become a function so that I can re-use it for the lists/projects.
-tags <- do.call('rbind', 
+tags <- do.call('c', 
                lapply(1:length(tag.map),
-                      function(rr) {
-                        d <- data.frame(rr = rr)
-                        if (length(tag.map[[rr]]) == 0) {
-                          d$tags = '' #list(tag.map[[rr]])
-                        } else if (dim(tag.map[[rr]])[1] == 1) {
-                          d$tags <- gsub(' ', '', tag.map[[rr]][1, 1])
-                        } else {
-                          d$tags <- gsub(' ', '', paste0(tag.map[[rr]][, 1], 
-                                                         collapse = ','))
-                        } 
-                        return(d)
+                      function(ii) {
+                        res <- ifelse(length(tag.map[[ii]]) == 0, 
+                                      '',
+                                      gsub(' ', '', 
+                                           paste0(tag.map[[ii]], collapse = ',')))
                       }))
 subset(tags, grepl('+hhs', tags))
 
