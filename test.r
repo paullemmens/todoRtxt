@@ -19,7 +19,6 @@ thr.ptrn <- '( [Tt]:\\d{4}-\\d{2}-\\d{2})?'
 thr.dates <- str_extract(todo.raw, thr.ptrn)
 rec.ptrn <- '( [Rr][Ee][Cc]:\\d+[dDwWmMyY])?'
 rec.dates <- str_extract(todo.raw, rec.ptrn)
-tasks <- cbind(prefix.map, data.frame(due = due.dates, threshold = thr.dates, recurrence = rec.dates))
 
 # Helper function to create an array of strings containing the list and tag 
 # identifiers.
@@ -28,9 +27,9 @@ get.strings <- function(string, pattern) {
   res <- do.call('c',
                  lapply(map, 
                         function(mm) {
-                          ifelse(length(mm) == 0, '', gsub(' ', '', 
-                                                           paste0(mm, 
-                                                                  collapse = ',')))
+                          ifelse(length(mm) == 0, 
+                                 '', 
+                                 gsub(' ', '', paste0(mm, collapse = ',')))
                         }))
   return(res)
 }
@@ -39,17 +38,9 @@ get.strings <- function(string, pattern) {
 tags <- get.strings(todo.raw, '( \\+\\w+)')
 lists <- get.strings(todo.raw, '( \\@\\w+)')
 
-# This results in 'half a data.frame' that does have vectors/c()'s as row elements,
-# but perhaps a list of lists makes more sense.
-# FIXME: needs to become a function so that I can re-use it for the lists/projects.
-tags <- do.call('c', 
-               lapply(1:length(tag.map),
-                      function(ii) {
-                        res <- ifelse(length(tag.map[[ii]]) == 0, 
-                                      '',
-                                      gsub(' ', '', 
-                                           paste0(tag.map[[ii]], collapse = ',')))
-                      }))
-subset(tags, grepl('+hhs', tags))
+# Combine everything in one big data.frame.
+tasks <- cbind(prefix.map, 
+               data.frame(due = due.dates, threshold = thr.dates, 
+                          recurrence = rec.dates, tags = tags, lists = lists))
 
-# FIXME: integreren in het grote data frame
+subset(tags, grepl('+hhs', tags))
