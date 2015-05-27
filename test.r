@@ -5,40 +5,49 @@ library(stringr)
 todo.raw <- readLines(con = file.path(todo.dir, 'todo.txt'), encoding = 'UTF-8') 
 done.raw <- readLines(con = file.path(todo.dir, 'done.txt'), encoding = 'UTF-8') 
 
-prefix.map <- str_match(todo.raw, '(^x +)?(\\([A-Z]\\) +)*(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)')
-proj.map <- str_match(remain, '( \\+\\w+).*\\1*')
-post.infix.map <- str_match(todo.raw, '(( \\+\\w+).*\\1*)|( due:\\d{4}-\\d{2}-\\d{2})|( t:\\d{4}-\\d{2}-\\d{2})|( rec:\\d+[dwmy])|(( @\\w+).*\\1*)')
+# This file in the repo of Simpletask cloudless shows the patterns that author 
+# uses to get thing working.
+prefix.map <- data.frame(str_match(todo.raw, '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)'),
+                         stringsAsFactors = FALSE)
+names(prefix.map)[-6] <- c('orig.task', 'done', 'prio', 'd.compl', 'd.ent', 'clean.task')
 
-lent <- length(todo.raw)
-lend <- length(done.raw)
+# A series of maps to tease out relevant bits from each line.
+due.ptrn <- '( [Dd][Uu][Ee]:\\d{4}-\\d{2}-\\d{2})'
+due.dates <- str_extract(todo.raw, due.ptrn)
+thr.ptrn <- '( [Tt]:\\d{4}-\\d{2}-\\d{2})?'
+thr.dates <- str_extract(todo.raw, thr.ptrn)
+rec.ptrn <- '( [Rr][Ee][Cc]:\\d+[dDwWmMyY])?'
+rec.dates <- str_extract(todo.raw, rec.ptrn)
 
-todo <- do.call('rbind', 
-                lapply(1:lent, 
-                       function(ll) {
-# options for the start of the line:
-# - '... ' : task, no date-added
-# - 'x ...' : completed 
-                         prefix.map <- str_match(todo.raw, 
-                                                 '(^x +)?(\\([A-Z]\\) +)*(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)')
-                         done <- prefix.map[, 3]
-                         d.done <- prefix.map[, 4]
-                         d.added <- prefix.map[, 5]
-                         # ignore the other dates in column 6.
-                         remain <- prefix.map[, 7]
-                         browser()
 
-                         
-                         cat(done, '\t', d.done, '\t', d.added, '\t', substr(remain, 1, 10), '\n')
-                         flush.console()
-#                         thresh.pattern <- str_extract(todo.raw[ll], 
-#                                                       't:[0-9]{4}-[0-9]{2}-[0-9]{2}')
-#                         threshold <- as.Date(gsub('t:', '', thresh.pattern))
-#                         remain <- str_extract(todo.raw[ll], 
-#                                               '(?! t:[0-9]{4}-[0-9]{2}-[0-9]{2})')
-#                         cat(threshold, '\n-->', remain, '\n')
-#                         flush.console()
-#                         d <- data.frame(threshold = threshold)
-                         d <- data.frame(t.done = done)
-                       }
-                      )
-                )
+# FIXME: blijven steken bij het optimaliseren/goed maken van het dates.map patroon.
+# in de oude situatie reageerde het maar op 1 van de 3 (sub)patronen in de expressie.
+# Zoals het patroon hieronder staat, match het wel alles, maar alleen die items die alles hebben staan.
+dates.map <- data.frame(str_match(todo.raw, '( [Dd][Uu][Ee]:\\d{4}-\\d{2}-\\d{2})?.*( [Tt]:\\d{4}-\\d{2}-\\d{2})?'), #?.*( [Rr][Ee][Cc]:\\d+[dDwWmMyY])?'),
+                        stringsAsFactors = FALSE)
+#names(dates.map) <- c()
+
+# This gives a list that needs to be flattened down.
+tag.map <- str_match_all(todo.raw , '( \\+\\w+)')
+list.map <- str_match_all(todo.raw , '( \\@\\w+)')
+
+# This results in 'half a data.frame' that does have vectors/c()'s as row elements,
+# but perhaps a list of lists makes more sense.
+# FIXME: needs to become a function so that I can re-use it for the lists/projects.
+tags <- do.call('rbind', 
+               lapply(1:length(tag.map),
+                      function(rr) {
+                        d <- data.frame(rr = rr)
+                        if (length(tag.map[[rr]]) == 0) {
+                          d$tags = '' #list(tag.map[[rr]])
+                        } else if (dim(tag.map[[rr]])[1] == 1) {
+                          d$tags <- gsub(' ', '', tag.map[[rr]][1, 1])
+                        } else {
+                          d$tags <- gsub(' ', '', paste0(tag.map[[rr]][, 1], 
+                                                         collapse = ','))
+                        } 
+                        return(d)
+                      }))
+subset(tags, grepl('+hhs', tags))
+
+# FIXME: integreren in het grote data frame
