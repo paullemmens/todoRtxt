@@ -2,8 +2,9 @@ setwd('c:/nlv19419/R/todoRtxt')
 todo.dir <- 'C:/Users/NLV19419/Google Drive/todo'
 library(stringr)
 
-todo.raw <- readLines(con = file.path(todo.dir, 'todo.txt'), encoding = 'UTF-8') 
-done.raw <- readLines(con = file.path(todo.dir, 'done.txt'), encoding = 'UTF-8') 
+source('file.loading.r')
+todo.raw <- load.todo(path = todo.dir)
+done.raw <- load.done(path = todo.dir)
 
 # This file in the repo of Simpletask cloudless shows the patterns that author 
 # uses to get thing working.
