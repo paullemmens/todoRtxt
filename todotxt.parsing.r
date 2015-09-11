@@ -38,10 +38,12 @@ parse.todotxt <- function(raw.todo) {
 # Combine everything in one big data.frame.
   tasks <- cbind(prefix.map, 
                  data.frame(due = due.dates, threshold = thr.dates, 
-                            recurrence = rec.dates, tags = tags, lists = lists,
+# list abbreviated as lst to prevent name clashes.
+                            recurrence = rec.dates, tag = tags, lst = lists,
                             stringsAsFactors = FALSE))
-
-# FIXME: sort file on something?
+  tasks$d.compl <- as.Date(tasks$d.compl)
+  tasks$d.ent <- as.Date(tasks$d.ent)
+  tasks <- arrange(tasks, idx)
 
 # Return the tasks with another class identifier added.
   class(tasks) <- append('todoRtxt', class(tasks))
