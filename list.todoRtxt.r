@@ -9,6 +9,7 @@
 #' @export
 t.list <- function(pattern = NULL) {
   if (!is.null(pattern)) {
+# FIXME: presumes tasks is always the appropriate thing to look for in global env.
     idx <- grepl(pattern, tasks$clean.task, ignore.case = TRUE)
     tasks[idx, ]
   } else {
