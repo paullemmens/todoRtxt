@@ -3,6 +3,7 @@ setwd('c:/nlv19419/R/todoRtxt')
 todo.dir <- 'C:/nlv19419/Box Sync/todo'
 library(stringr)
 library(dplyr)
+library(magrittr)
 
 source('file.loading.r')
 todo.raw <- load.todo(path = todo.dir)
@@ -17,5 +18,8 @@ tasks
 source('list.todoRtxt.r')
 t.list()
 t.list('backlog')
+
+source('view.todoRtxt.r')
+tv()
 
 subset(tags, grepl('+hhs', tags))
