@@ -1,0 +1,74 @@
+---
+title: 'Overview of todo performance alla Todoist Karma'
+output:
+  knitrBootstrap::bootstrap_document:
+    theme: default
+    highlight: 'visual studio'
+    theme.chooser: false
+    highlight.chooser: false
+    clean_supporting: true
+---
+
+```{r set-options-read-chunks, echo=FALSE, message=FALSE, warning=FALSE, bootstrap.show.code = FALSE}
+knitr::opts_chunk$set(results = 'markup', echo=FALSE, message=FALSE, warning=TRUE, dev=c('CairoSVG'), 
+                      bootstrap.show.code=FALSE)
+rm(list=ls())
+options(width=120)
+library(Cairo)
+library(stringr)
+library(ggplot2)
+library(scales)
+library(dplyr)
+library(reshape2)
+mygeoms(use=FALSE)
+palette <- 'Dark2'
+```
+
+```{r load-data}
+source('file.loading.r')
+source('todotxt.parsing.r')
+todo.dir <- 'C:/nlv19419/Box Sync/todo'
+todo.raw <- load.todo(path = todo.dir)
+done.raw <- load.done(path = todo.dir)
+tasks <- parse.todotxt(todo.raw)
+done <- parse.todotxt(done.raw)
+tl <- rbind(tasks, done)
+```
+
+# Tasks completed per week
+
+```{r completed-per-week}
+tl %>% mutate(week = format(d.compl, '%V')) %>% filter(!is.na(done)) %>%
+  group_by(week) %>% summarize(taskcount = n()) %>% filter(!is.na(week)) %>%
+  ggplot(mapping = aes(x = week, y = taskcount)) +
+    geom_line(aes(group = 1), size = 1.2) +
+    labs(x = 'Week number', y = 'Number of task completed',
+         title = 'Number of tasks completed per week\n') +
+    mytheme + theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+
+# This is more complicated because of the tasks having multiple lists or tags.
+tl %>% mutate(week = format(d.compl, '%V')) %>% filter(is.na(done), !is.na(week)) %>%
+  group_by(lst, tag, week) %>% summarize(taskcount = n()) %>%
+  ggplot(mapping = aes(x = week, y = taskcount, colour = tag, linetype = list)) +
+    geom_line(size = 1.2) +
+    labs(x = 'Week number', y = 'Number of task completed',
+         title = 'Number of tasks completed per week\n') +
+    scale_colour_brewer(type = 'qual', palette = palette) +
+    mytheme + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 1))
+#tl %>% mutate() %>% group_by(list, tag, week) %>% summarize(no.tasks = n()) %>%
+#  ggplot()
+```
+
+lag between entered and due
+
+# Timeliness of completion
+
+```{r due-done-lag}
+require(magrittr)
+tl %>% filter(!is.na(done)) %>% 
+  mutate(due.lag = due - d.compl) %>%
+  group_by(lst, tag) %>% use_series(due.lag)  %>% mean_cl_boot(due.lag)
+```
+lag between due and done
+
+
