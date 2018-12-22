@@ -1,0 +1,15 @@
+Package: todoRtxt
+Title: Parsing and Analysis of todo.txt Files
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Paul",
+           family = "Lemmens",
+           role = c("aut", "cre"),
+           email = "paul.lemmens@gmail.com")
+Description: The todoRtxt package provides a parser to read todo.txt files
+    in R. A Shiny app can be used to analyze performance.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat
