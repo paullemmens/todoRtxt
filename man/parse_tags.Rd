@@ -2,7 +2,7 @@
 % Please edit documentation in R/parser.R
 \name{parse_tags}
 \alias{parse_tags}
-\title{Parse Tags From a Todo}
+\title{Parse Tags From A To Do}
 \usage{
 parse_tags(todo, tag)
 }
@@ -14,12 +14,15 @@ parse_tags(todo, tag)
 \value{
 A (mini) data frame with a row for each context found and in that
 row a variable for the context and its start and end position in the
-todo.
+to do.
 }
 \description{
 Contexts are tags prefixed with an \code{@}. Projects are tags prefixed with
-a \code{+} (plus). One todo can contain multiple
+a \code{+} (plus). One to do can contain multiple
 contexts and/or multiple projects that should all be preserved.
 The regular expressions are taken from the source code of Simpletask by
 Mark Janssen.
+}
+\author{
+Paul Lemmens (paul.lemmens@gmail.com)
 }

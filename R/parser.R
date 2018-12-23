@@ -33,3 +33,42 @@ parse_tags <- function(todo, tag) {
   return(contexts)
 }
 
+
+#' @title Parse Date Components Of A To Do
+#'
+#' @author Paul Lemmens (paul.lemmens@gmail.com)
+#'
+#' @description
+#' Following the official definition from Gina Trappani, a to do can have a due
+#' date only. This due date is indicated with the string `due:` immediately
+#' (i.e., no space) followed by a date in ISO format (yyyy-mm-dd).
+#'
+#' Extensions of the todo.txt format also specify a start date for a task also
+#' frequently referred to as threshold date: the date when a task should appear
+#' on a list or in a view. Typically `t:` is used for indicating a threshold
+#' date.
+#'
+#' Due dates and threshold dates should appear only once in any to do. So only
+#' the first occurrence is considered.
+#'
+#' @param todo A single todo (string).
+#' @param prefix String to indicate which type of date to search: either `t`
+#'     or `due`; defaults to 'due'.
+#'
+#' @return The due or threshold date that was found after checking whether it
+#' is a valid date stamp; if it is not, NA is returned.
+#'
+#' @importFrom dplyr "%>%"
+#'
+parse_date <- function(todo, prefix = 'due') {
+  date_pattern <- '( [Dd][Uu][Ee]:\\d{4}-\\d{2}-\\d{2})'
+  if (prefix == 't') {
+    date_pattern <- '( [Tt]:\\d{4}-\\d{2}-\\d{2})'
+  }
+
+  dt <- stringr::str_extract(todo, pattern = date_pattern) %>%
+    stringr::str_trim() %>%
+    stringr::str_replace('([Dd][Uu][Ee]|[Tt]):', '')
+
+  return(lubridate::ymd(dt, quiet = TRUE))
+}
