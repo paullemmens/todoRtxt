@@ -1,4 +1,4 @@
-context("test-parse_contexts")
+context("Test contexts parser")
 
 test_that("contexts are parsed correctly", {
   todo1 <- '@context xxx'
@@ -17,7 +17,8 @@ test_that("contexts are parsed correctly", {
     '@context3', 18L,    27L
   )
 
-  expect_identical(parse_contexts(todo1), res1)
-  expect_identical(parse_contexts(todo2), res2)
-  expect_identical(parse_contexts(todo3), res3)
+  expect_identical(parse_tags(todo1, '@'), res1)
+  expect_identical(parse_tags(todo2, '@'), res2)
+  expect_identical(parse_tags(todo3, '@'), res3)
+})
 })
