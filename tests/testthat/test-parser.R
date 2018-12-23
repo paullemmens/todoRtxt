@@ -82,3 +82,23 @@ test_that('threshold dates are parsed correctly', {
   expect_equal(parse_date(todo[4], 't'), expected[4])
   expect_equal(parse_date(todo[5], 't'), expected[5])
 })
+
+
+context('Test recurrence parser')
+
+test_that('recurrences are recognized correctly', {
+  todo <- c('rec:1m',
+            ' rec:1w',
+            ' rec:+1w',
+            'xxx @context rec:2d yyy',
+            'xxx rec:Ad',
+            'xxx rec:2k')
+  expected <- c(NA, '1w', '+1w', '2d', NA, NA)
+
+  expect_equal(parse_recurrence(todo[1]), expected[1])
+  expect_equal(parse_recurrence(todo[2]), expected[2])
+  expect_equal(parse_recurrence(todo[3]), expected[3])
+  expect_equal(parse_recurrence(todo[4]), expected[4])
+  expect_equal(parse_recurrence(todo[5]), expected[5])
+  expect_equal(parse_recurrence(todo[6]), expected[6])
+})

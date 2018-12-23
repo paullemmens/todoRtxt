@@ -72,3 +72,30 @@ parse_date <- function(todo, prefix = 'due') {
 
   return(lubridate::ymd(dt, quiet = TRUE))
 }
+
+
+#' @title Parse Recurrence In A To Do
+#'
+#' @author Paul Lemmens (paul.lemmens@gmail.com)
+#'
+#' @description
+#' A further extension of the original specification is setting a
+#' recurrence of a to do using the prefix `rec:`. A recurrence is set in
+#' N days, weeks, months, or years. When N is preceded by a plus, it says to
+#' start the recurrence calculation by the original due date or by today's
+#' date.
+#'
+#' @param todo A single todo (string).
+#'
+#' @return The recurrence setting for a to do as string.
+#'
+#' @importFrom dplyr "%>%"
+parse_recurrence <- function(todo) {
+  recurrence_pattern <- ' [Rr][Ee][Cc]:((\\+?)\\d+[dDwWmMyY])'
+
+  rec <- stringr::str_extract(todo, pattern = recurrence_pattern) %>%
+    stringr::str_trim() %>%
+    stringr::str_replace('[Rr][Ee][Cc]:', '')
+
+  return(rec)
+}
