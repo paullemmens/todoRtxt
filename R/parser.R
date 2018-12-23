@@ -18,7 +18,6 @@
 #'
 #' @importFrom dplyr "%>%"
 #'
-#' @export
 parse_tags <- function(todo, tag) {
   contexts_pattern <- paste0('( \\', tag, '\\w+)')
 
