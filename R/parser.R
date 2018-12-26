@@ -85,7 +85,7 @@ parse_date <- function(todo, prefix = 'due') {
 #' start the recurrence calculation by the original due date or by today's
 #' date.
 #'
-#' @param todo A single todo (string).
+#' @param todo A single to do (string).
 #'
 #' @return The recurrence setting for a to do as string.
 #'
@@ -98,4 +98,30 @@ parse_recurrence <- function(todo) {
     stringr::str_replace('[Rr][Ee][Cc]:', '')
 
   return(rec)
+}
+
+
+#' @title Parse Priority, Creation And Completed Dates
+#'
+#' @author Paul Lemmens (paul.lemmens@gmail.com)
+#'
+#' @description
+#' Parsing a to do's priority, creation and due date actually combines
+#' elements that should be handled separately. However, the grep pattern
+#' that is used is quite useful and more difficult to strip into components.
+#' Additionally, these components are all prefixed before the actual task
+#' so it is sensible to combine parsing in one go.
+#'
+#' @param todo A to do (string), or a vector of to dos.
+#'
+#' @return A tibble with variables for creation date, completion date, and
+#' priority of a to do
+#'
+#' @references
+#' https://github.com/mpcjanssen/simpletask-android/blob/197bd51f496bd6066df902445acc28df51910d60/src/main/java/nl/mpcjanssen/simpletask/task/Task.java
+#'
+parse_prefixes <- function(todo) {
+  prefix_pattern <- '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)'
+
+  prefixes <- stringr::str_match(todo, pattern = prefix_pattern)
 }
