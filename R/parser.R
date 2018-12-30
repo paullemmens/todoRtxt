@@ -124,4 +124,6 @@ parse_prefixes <- function(todo) {
   prefix_pattern <- '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)'
 
   prefixes <- stringr::str_match(todo, pattern = prefix_pattern)
+
+  return(prefixes)
 }
