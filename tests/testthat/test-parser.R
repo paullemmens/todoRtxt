@@ -62,6 +62,7 @@ test_that('due dates are parsed correctly', {
   expect_equal(parse_date(todo[2]), expected[2])
   expect_equal(parse_date(todo[3]), expected[3])
   expect_equal(parse_date(todo[4]), expected[4])
+  expect_equal(parse_date(todo), expected)
 })
 
 
@@ -81,6 +82,7 @@ test_that('threshold dates are parsed correctly', {
   expect_equal(parse_date(todo[3], 't'), expected[3])
   expect_equal(parse_date(todo[4], 't'), expected[4])
   expect_equal(parse_date(todo[5], 't'), expected[5])
+  expect_equal(parse_date(todo, 't'), expected)
 })
 
 
@@ -101,6 +103,7 @@ test_that('recurrences are recognized correctly', {
   expect_equal(parse_recurrence(todo[4]), expected[4])
   expect_equal(parse_recurrence(todo[5]), expected[5])
   expect_equal(parse_recurrence(todo[6]), expected[6])
+  expect_equal(parse_recurrence(todo), expected)
 })
 
 
@@ -114,5 +117,9 @@ test_that('prefixes are parsed correctly', {
                           NA, NA, NA, NA, NA, NA, NA, "x y z", "a b c", "def", "a b c @context"
                           ), .Dim = c(4L, 7L))
 
+  expect_identical(parse_prefixes(todo[1]), expected[1, , drop = FALSE])
+  expect_identical(parse_prefixes(todo[2]), expected[2, , drop = FALSE])
+  expect_identical(parse_prefixes(todo[3]), expected[3, , drop = FALSE])
+  expect_identical(parse_prefixes(todo[4]), expected[4, , drop = FALSE])
   expect_identical(parse_prefixes(todo), expected)
 })

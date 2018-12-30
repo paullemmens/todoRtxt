@@ -51,7 +51,7 @@ parse_tags <- function(todo, tag) {
 #' Due dates and threshold dates should appear only once in any to do. So only
 #' the first occurrence is considered.
 #'
-#' @param todo A single todo (string).
+#' @param todo A single to do (string) or vector of to dos.
 #' @param prefix String to indicate which type of date to search: either `t`
 #'     or `due`; defaults to 'due'.
 #'
@@ -85,7 +85,7 @@ parse_date <- function(todo, prefix = 'due') {
 #' start the recurrence calculation by the original due date or by today's
 #' date.
 #'
-#' @param todo A single to do (string).
+#' @param todo A single to do (string) or vector of to dos.
 #'
 #' @return The recurrence setting for a to do as string.
 #'

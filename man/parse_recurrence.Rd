@@ -7,7 +7,7 @@
 parse_recurrence(todo)
 }
 \arguments{
-\item{todo}{A single to do (string).}
+\item{todo}{A single to do (string) or vector of to dos.}
 }
 \value{
 The recurrence setting for a to do as string.

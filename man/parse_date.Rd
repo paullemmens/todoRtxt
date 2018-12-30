@@ -7,7 +7,7 @@
 parse_date(todo, prefix = "due")
 }
 \arguments{
-\item{todo}{A single todo (string).}
+\item{todo}{A single to do (string) or vector of to dos.}
 
 \item{prefix}{String to indicate which type of date to search: either \code{t}
 or \code{due}; defaults to 'due'.}
