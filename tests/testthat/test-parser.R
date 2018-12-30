@@ -110,7 +110,10 @@ test_that('recurrences are recognized correctly', {
 context('Test parsing of prefix(es)')
 
 test_that('prefixes are parsed correctly', {
-  todo <- c('x 2018-12-12 2018-12-10 x y z', '(A) 2018-12-10 a b c', '2018-12-12 def', 'a b c @context')
+  todo <- c('x 2018-12-12 2018-12-10 x y z',
+            '(A) 2018-12-10 a b c',
+            '2018-12-12 def',
+            'a b c @context')
   expected <- structure(c("x 2018-12-12 2018-12-10 x y z", "(A) 2018-12-10 a b c",
                           "2018-12-12 def", "a b c @context", "x ", NA, NA, NA, NA, "(A) ",
                           NA, NA, "2018-12-12 ", "2018-12-10 ", "2018-12-12 ", NA, "2018-12-10 ",
