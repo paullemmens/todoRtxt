@@ -17,7 +17,7 @@ The due or threshold date that was found after checking whether it
 is a valid date stamp; if it is not, NA is returned.
 }
 \description{
-Following the official definition from Gina Trappani, a to do can have a due
+Following the official definition from Gina Trapani, a to do can have a due
 date only. This due date is indicated with the string \code{due:} immediately
 (i.e., no space) followed by a date in ISO format (yyyy-mm-dd).
 

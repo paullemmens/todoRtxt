@@ -39,7 +39,7 @@ parse_tags <- function(todo, tag) {
 #' @author Paul Lemmens (paul.lemmens@gmail.com)
 #'
 #' @description
-#' Following the official definition from Gina Trappani, a to do can have a due
+#' Following the official definition from Gina Trapani, a to do can have a due
 #' date only. This due date is indicated with the string `due:` immediately
 #' (i.e., no space) followed by a date in ISO format (yyyy-mm-dd).
 #'
