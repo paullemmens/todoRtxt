@@ -115,7 +115,8 @@ parse_recurrence <- function(todo) {
 #' @param todo A to do (string), or a vector of to dos.
 #'
 #' @return A tibble with variables for creation date, completion date, and
-#' priority of a to do
+#' priority of a to do. The tibble also contains the (original) task (as on
+#' file) and a "cleaned" version without aforementioned attributes.
 #'
 #' @references
 #' https://github.com/mpcjanssen/simpletask-android/blob/197bd51f496bd6066df902445acc28df51910d60/src/main/java/nl/mpcjanssen/simpletask/task/Task.java
@@ -123,7 +124,16 @@ parse_recurrence <- function(todo) {
 parse_prefixes <- function(todo) {
   prefix_pattern <- '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)'
 
-  prefixes <- stringr::str_match(todo, pattern = prefix_pattern)
+  prefixes <- tibble::as.tibble(stringr::str_match(todo, pattern = prefix_pattern))
+  names(prefixes)[-6] <- c('task', 'done', 'priority', 'date_completed',
+                           'date_created', 'task_cleaned')
+
+  prefixes <- prefixes %>%
+    dplyr::select(-V6) %>%
+    dplyr::mutate(date_created   = dplyr::if_else(is.na(done), date_completed, date_created),
+                  date_completed = dplyr::if_else(is.na(done), NA_character_,  date_completed)) %>%
+    dplyr::mutate_at(dplyr::vars(dplyr::starts_with('date_')),
+                     dplyr::funs(lubridate::ymd(., quiet = FALSE)))
 
   return(prefixes)
 }

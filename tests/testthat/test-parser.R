@@ -114,11 +114,20 @@ test_that('prefixes are parsed correctly', {
             '(A) 2018-12-10 a b c',
             '2018-12-12 def',
             'a b c @context')
-  expected <- structure(c("x 2018-12-12 2018-12-10 x y z", "(A) 2018-12-10 a b c",
-                          "2018-12-12 def", "a b c @context", "x ", NA, NA, NA, NA, "(A) ",
-                          NA, NA, "2018-12-12 ", "2018-12-10 ", "2018-12-12 ", NA, "2018-12-10 ",
-                          NA, NA, NA, NA, NA, NA, NA, "x y z", "a b c", "def", "a b c @context"
-                          ), .Dim = c(4L, 7L))
+  expected <- structure(list(task = c("x 2018-12-12 2018-12-10 x y z",
+                                      "(A) 2018-12-10 a b c",
+                                      "2018-12-12 def", "a b c @context"),
+                             done = c("x ", NA, NA, NA),
+                             priority = c(NA, "(A) ", NA, NA),
+                             date_completed = c("2018-12-12 ", NA, NA, NA),
+                             date_created = c("2018-12-10 ", "2018-12-10 ",
+                                              "2018-12-12 ", NA),
+                             task_cleaned = c("x y z", "a b c", "def",
+                                              "a b c @context")),
+                        .Names = c("task", "done", "priority", "date_completed",
+                                   "date_created", "task_cleaned"),
+                        class = c("tbl_df", "tbl", "data.frame"),
+                        row.names = c(NA, -4L))
 
   expect_identical(parse_prefixes(todo[1]), expected[1, , drop = FALSE])
   expect_identical(parse_prefixes(todo[2]), expected[2, , drop = FALSE])
