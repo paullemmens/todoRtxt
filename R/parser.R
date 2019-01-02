@@ -25,10 +25,10 @@ parse_tags <- function(todo, tag) {
     stringr::str_trim()
   positions <- stringr::str_locate_all(todo, pattern = contexts_pattern)[[1]]
 
-  contexts <- dplyr::bind_cols(
-    tibble::tibble(context = contexts),
-    tibble::tibble(start   = positions[, 'start'],
-                   end     = positions[, 'end']))
+  ## contexts <- dplyr::bind_cols(
+  ##   tibble::tibble(context = contexts),
+  ##   tibble::tibble(start   = positions[, 'start'],
+  ##                  end     = positions[, 'end']))
 
   return(contexts)
 }
