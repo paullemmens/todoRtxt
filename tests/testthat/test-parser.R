@@ -2,20 +2,13 @@ context("Test contexts parser")
 
 test_that("contexts are parsed correctly", {
   todo1 <- '@context xxx'
-  res1 <- tibble::tibble(context = character(), start = integer(), end = integer())
+  res1 <- character()
 
   todo2 <- ' @context xxx'
-  res2 <- tibble::tribble(
-    ~context,    ~start, ~end,
-    '@context',  1L,     9L
-  )
+  res2 <- '@context'
 
   todo3 <- 'xxx @context2 yyy @context3 zzz'
-  res3 <- tibble::tribble(
-    ~context,    ~start, ~end,
-    '@context2', 4L,     13L,
-    '@context3', 18L,    27L
-  )
+  res3 <- c('@context2', '@context3')
 
   expect_identical(parse_tags(todo1, '@'), res1)
   expect_identical(parse_tags(todo2, '@'), res2)
