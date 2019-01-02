@@ -20,20 +20,13 @@ context("Test projects parser")
 
 test_that('projects are parsed correctly', {
   todo1 <- '+proj xxx'
-  res1 <- tibble::tibble(context = character(), start = integer(), end = integer())
+  res1 <- character()
 
   todo2 <- ' +proj xxx'
-  res2 <- tibble::tribble(
-    ~context,    ~start, ~end,
-    '+proj',  1L,     6L
-  )
+  res2 <- '+proj'
 
   todo3 <- 'xxx +proj2 yyy +proj3 zzz'
-  res3 <- tibble::tribble(
-    ~context,    ~start, ~end,
-    '+proj2', 4L,     10L,
-    '+proj3', 15L,    21L
-  )
+  res3 <- c('+proj2', '+proj3')
 
   expect_identical(parse_tags(todo1, '+'), res1)
   expect_identical(parse_tags(todo2, '+'), res2)
