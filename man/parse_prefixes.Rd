@@ -11,7 +11,8 @@ parse_prefixes(todo)
 }
 \value{
 A tibble with variables for creation date, completion date, and
-priority of a to do
+priority of a to do. The tibble also contains the (original) task (as on
+file) and a "cleaned" version without aforementioned attributes.
 }
 \description{
 Parsing a to do's priority, creation and due date actually combines
