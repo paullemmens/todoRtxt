@@ -13,13 +13,13 @@
 #' A Shiny app is provided that provides a (semi) GUI for these operations as
 #' well as an analytics engine for completed tasks.
 #'
-#' @section Overview
+#' @section Overview:
 #' A short section on how the package can be used.
 #'
-#' @section Exported functions
+#' @section Exported functions:
 #' Loading one/more files, editing/modifying a to do.
 #'
-#' @section Shiny app
+#' @section Shiny app:
 #' **FIXME: todo**
 #'
 #' @docType package
