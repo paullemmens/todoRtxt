@@ -18,15 +18,8 @@ load_tasks <- function(f) {
   stopifnot(file.exists(f))
   raw <- readLines(con = f, encoding = 'UTF-8')
 
-  ## Parse the various components. For now do use (deprecated) rowwise()
-  ## for parsing multi-item returning functions.
-  todo <- parse_prefixes(raw) %>%
-    dplyr::mutate(date_due       = parse_date(task, prefix = 'due'),
-                  date_threshold = parse_date(task, prefix = 't'),
-                  recurrence     = parse_recurrence(task))
+  todo <- parse_tasks(raw)
   todo <- todo %>%
-    dplyr::mutate(context = purrr::map(task, ~ parse_tags(., tag = '@')),
-                  project = purrr::map(task, ~ parse_tags(., tag = '+')))
 
   ## FIXME: validate parsed to dos?
 
