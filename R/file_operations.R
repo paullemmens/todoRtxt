@@ -20,6 +20,7 @@ load_tasks <- function(f) {
 
   todo <- parse_tasks(raw)
   todo <- todo %>%
+    dplyr::mutate(tid = 1:n())
 
 
   return(todo)
