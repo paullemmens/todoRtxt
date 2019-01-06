@@ -16,6 +16,21 @@ well as functions to add, update, delete, or cross out completed to dos.
 A Shiny app is provided that provides a (semi) GUI for these operations as
 well as an analytics engine for completed tasks.
 }
+\section{Overview}{
+
+A short section on how the package can be used.
+}
+
+\section{Exported functions}{
+
+Loading one/more files, editing/modifying a to do.
+}
+
+\section{Shiny app}{
+
+\strong{FIXME: todo}
+}
+
 \author{
 Paul Lemmens (paul.lemmens@gmail.com)
 }
