@@ -137,3 +137,46 @@ parse_prefixes <- function(todo) {
 
   return(prefixes)
 }
+
+
+#' @title Parse A (List Of) To Dos
+#'
+#' @author Paul Lemmens (paul.lemmens@paul-lemmens.nl)
+#'
+#' @description
+#' This function parses one to do, or a "list" (read, a vector of to do
+#' strings) in its entirety. A to do is specified following the definition(s)
+#' by Gina Trapani via todotxt.org and comprising a creation date as first
+#' item on a line, a due date marked using `due:`, and a priority at the start
+#' of each line as `(X)`. Tags are indicated using either an `@` for
+#' (typically) contexts and a plus `+` for projects. Optional components
+#' comprise a recurrence specified
+#' using `rec:` as extension of the original todo.txt specification (see
+#' documentation of the android app SimpleTask).
+#'
+#' @param task One to do (string), or a vector of strings.
+#'
+#' @return A tibble with a parsed to do.
+#'
+#' @importFrom dplyr "%>%"
+#'
+#' @name parse_task
+#' @export
+parse_task <- function(task) {
+  todo <- parse_prefixes(task) %>%
+    dplyr::mutate(date_due       = parse_date(task, prefix = 'due'),
+                  date_threshold = parse_date(task, prefix = 't'),
+                  recurrence     = parse_recurrence(task))
+  todo <- todo %>%
+    dplyr::mutate(context = purrr::map(task, ~ parse_tags(., tag = '@')),
+                  project = purrr::map(task, ~ parse_tags(., tag = '+')))
+
+  ## Add our package as class to define printing methods.
+  class(todo) <- append('todoRtxt', class(todo))
+
+  return(todo)
+}
+
+#' @rdname parse_task
+#' @export
+parse_tasks <- parse_task
