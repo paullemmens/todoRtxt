@@ -21,7 +21,6 @@ load_tasks <- function(f) {
   todo <- parse_tasks(raw)
   todo <- todo %>%
 
-  ## FIXME: validate parsed to dos?
 
   return(todo)
 }
