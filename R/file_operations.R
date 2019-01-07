@@ -44,5 +44,7 @@ load_tasks <- function(f) {
 write_tasks <- function(tasks, todo_file) {
   stopifnot(length(tasks) > 0)
 
+  ## FIXME: expand to use tryCatch()es and a backup of the original file.
+  ## for that use the fs package??
   writeLines(tasks, con = todo_file)
 }
