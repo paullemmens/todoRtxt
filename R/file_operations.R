@@ -29,18 +29,16 @@ load_tasks <- function(f) {
 }
 
 
-#' @title Write A File With To Dos
+#' @title Write A File With Tasks
 #'
 #' @author Paul Lemmens (paul.lemmens@gmail.com)
 #'
 #' @description
-#' empty
+#' Writing a set of tasks to file comprises writing all entries in the `task`
+#' variable in a tibble produced by [`parse_tasks()`].
 #'
-#' @param foo
-#'
-#' @return bar
-#'
-#' @importFrom dplyr "%>%"
+#' @param tasks A vector of strings representing tasks following the
+#' todo.txt convention by Gina Trapani.
 #'
 #' @export
 write_tasks <- function(tasks, todo_file) {
