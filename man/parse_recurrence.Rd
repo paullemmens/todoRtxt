@@ -2,19 +2,19 @@
 % Please edit documentation in R/parser.R
 \name{parse_recurrence}
 \alias{parse_recurrence}
-\title{Parse Recurrence In A To Do}
+\title{Parse Recurrence In A Task}
 \usage{
 parse_recurrence(todo)
 }
 \arguments{
-\item{todo}{A single to do (string) or vector of to dos.}
+\item{todo}{A single task (string) or vector of tasks.}
 }
 \value{
-The recurrence setting for a to do as string.
+The recurrence setting for a task as string.
 }
 \description{
 A further extension of the original specification is setting a
-recurrence of a to do using the prefix \code{rec:}. A recurrence is set in
+recurrence of a task using the prefix \code{rec:}. A recurrence is set in
 N days, weeks, months, or years. When N is preceded by a plus, it says to
 start the recurrence calculation by the original due date or by today's
 date.

@@ -2,12 +2,12 @@
 % Please edit documentation in R/parser.R
 \name{parse_date}
 \alias{parse_date}
-\title{Parse Date Components Of A To Do}
+\title{Parse Date Components Of A Task}
 \usage{
 parse_date(todo, prefix = "due")
 }
 \arguments{
-\item{todo}{A single to do (string) or vector of to dos.}
+\item{todo}{A single task (string) or vector of tasks.}
 
 \item{prefix}{String to indicate which type of date to search: either \code{t}
 or \code{due}; defaults to 'due'.}
@@ -17,7 +17,7 @@ The due or threshold date that was found after checking whether it
 is a valid date stamp; if it is not, NA is returned.
 }
 \description{
-Following the official definition from Gina Trapani, a to do can have a due
+Following the official definition from Gina Trapani, a task can have a due
 date only. This due date is indicated with the string \code{due:} immediately
 (i.e., no space) followed by a date in ISO format (yyyy-mm-dd).
 
@@ -26,7 +26,7 @@ frequently referred to as threshold date: the date when a task should appear
 on a list or in a view. Typically \code{t:} is used for indicating a threshold
 date.
 
-Due dates and threshold dates should appear only once in any to do. So only
+Due dates and threshold dates should appear only once in any task. So only
 the first occurrence is considered.
 }
 \author{

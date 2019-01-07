@@ -3,21 +3,21 @@
 \name{parse_task}
 \alias{parse_task}
 \alias{parse_tasks}
-\title{Parse A (List Of) To Dos}
+\title{Parse A (List Of) Tasks}
 \usage{
 parse_task(task)
 
 parse_tasks(task)
 }
 \arguments{
-\item{task}{One to do (string), or a vector of strings.}
+\item{task}{One task (string), or a vector of strings.}
 }
 \value{
-A tibble with a parsed to do.
+A tibble with a parsed task.
 }
 \description{
-This function parses one to do, or a "list" (read, a vector of to do
-strings) in its entirety. A to do is specified following the definition(s)
+This function parses one task, or a "list" (read, a vector of task
+strings) in its entirety. A task is specified following the definition(s)
 by Gina Trapani via todotxt.org and comprising a creation date as first
 item on a line, a due date marked using \code{due:}, and a priority at the start
 of each line as \code{(X)}. Tags are indicated using either an \code{@} for

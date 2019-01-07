@@ -1,10 +1,10 @@
-#' @title Parse Tags From A To Do
+#' @title Parse Tags From A Task
 #'
 #' @author Paul Lemmens (paul.lemmens@gmail.com)
 #'
 #' @description
 #' Contexts are tags prefixed with an `@`. Projects are tags prefixed with
-#' a `+` (plus). One to do can contain multiple
+#' a `+` (plus). One task can contain multiple
 #' contexts and/or multiple projects that should all be preserved.
 #' The regular expressions are taken from the source code of Simpletask by
 #' Mark Janssen.
@@ -14,7 +14,7 @@
 #'
 #' @return A (mini) data frame with a row for each context found and in that
 #'     row a variable for the context and its start and end position in the
-#'     to do.
+#'     task.
 #'
 #' @importFrom dplyr "%>%"
 #'
@@ -34,12 +34,12 @@ parse_tags <- function(todo, tag) {
 }
 
 
-#' @title Parse Date Components Of A To Do
+#' @title Parse Date Components Of A Task
 #'
 #' @author Paul Lemmens (paul.lemmens@gmail.com)
 #'
 #' @description
-#' Following the official definition from Gina Trapani, a to do can have a due
+#' Following the official definition from Gina Trapani, a task can have a due
 #' date only. This due date is indicated with the string `due:` immediately
 #' (i.e., no space) followed by a date in ISO format (yyyy-mm-dd).
 #'
@@ -48,10 +48,10 @@ parse_tags <- function(todo, tag) {
 #' on a list or in a view. Typically `t:` is used for indicating a threshold
 #' date.
 #'
-#' Due dates and threshold dates should appear only once in any to do. So only
+#' Due dates and threshold dates should appear only once in any task. So only
 #' the first occurrence is considered.
 #'
-#' @param todo A single to do (string) or vector of to dos.
+#' @param todo A single task (string) or vector of tasks.
 #' @param prefix String to indicate which type of date to search: either `t`
 #'     or `due`; defaults to 'due'.
 #'
@@ -74,20 +74,20 @@ parse_date <- function(todo, prefix = 'due') {
 }
 
 
-#' @title Parse Recurrence In A To Do
+#' @title Parse Recurrence In A Task
 #'
 #' @author Paul Lemmens (paul.lemmens@gmail.com)
 #'
 #' @description
 #' A further extension of the original specification is setting a
-#' recurrence of a to do using the prefix `rec:`. A recurrence is set in
+#' recurrence of a task using the prefix `rec:`. A recurrence is set in
 #' N days, weeks, months, or years. When N is preceded by a plus, it says to
 #' start the recurrence calculation by the original due date or by today's
 #' date.
 #'
-#' @param todo A single to do (string) or vector of to dos.
+#' @param todo A single task (string) or vector of tasks.
 #'
-#' @return The recurrence setting for a to do as string.
+#' @return The recurrence setting for a task as string.
 #'
 #' @importFrom dplyr "%>%"
 parse_recurrence <- function(todo) {
@@ -106,16 +106,16 @@ parse_recurrence <- function(todo) {
 #' @author Paul Lemmens (paul.lemmens@gmail.com)
 #'
 #' @description
-#' Parsing a to do's priority, creation and due date actually combines
+#' Parsing a task's priority, creation and due date actually combines
 #' elements that should be handled separately. However, the grep pattern
 #' that is used is quite useful and more difficult to strip into components.
 #' Additionally, these components are all prefixed before the actual task
 #' so it is sensible to combine parsing in one go.
 #'
-#' @param todo A to do (string), or a vector of to dos.
+#' @param todo A task (string), or a vector of tasks.
 #'
 #' @return A tibble with variables for creation date, completion date, and
-#' priority of a to do. The tibble also contains the (original) task (as on
+#' priority of a task. The tibble also contains the (original) task (as on
 #' file) and a "cleaned" version without aforementioned attributes.
 #'
 #' @references
@@ -139,13 +139,13 @@ parse_prefixes <- function(todo) {
 }
 
 
-#' @title Parse A (List Of) To Dos
+#' @title Parse A (List Of) Tasks
 #'
 #' @author Paul Lemmens (paul.lemmens@paul-lemmens.nl)
 #'
 #' @description
-#' This function parses one to do, or a "list" (read, a vector of to do
-#' strings) in its entirety. A to do is specified following the definition(s)
+#' This function parses one task, or a "list" (read, a vector of task
+#' strings) in its entirety. A task is specified following the definition(s)
 #' by Gina Trapani via todotxt.org and comprising a creation date as first
 #' item on a line, a due date marked using `due:`, and a priority at the start
 #' of each line as `(X)`. Tags are indicated using either an `@` for
@@ -154,9 +154,9 @@ parse_prefixes <- function(todo) {
 #' using `rec:` as extension of the original todo.txt specification (see
 #' documentation of the android app SimpleTask).
 #'
-#' @param task One to do (string), or a vector of strings.
+#' @param task One task (string), or a vector of strings.
 #'
-#' @return A tibble with a parsed to do.
+#' @return A tibble with a parsed task.
 #'
 #' @importFrom dplyr "%>%"
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/file_operations.R
 \name{load_tasks}
 \alias{load_tasks}
-\title{Open A File With To Dos}
+\title{Open A File With Tasks}
 \usage{
 load_tasks(f)
 }
@@ -10,7 +10,7 @@ load_tasks(f)
 \item{f}{An absolute path to a todo.txt file (string).}
 }
 \value{
-A tibble with the to dos loaded from file with variables as
+A tibble with the tasks loaded from file with variables as
 specified in \code{\link[=parse_prefixes]{parse_prefixes()}}.
 }
 \description{

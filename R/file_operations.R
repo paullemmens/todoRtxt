@@ -1,4 +1,4 @@
-#' @title Open A File With To Dos
+#' @title Open A File With Tasks
 #'
 #' @author Paul Lemmens (paul.lemmens@gmail.com)
 #'
@@ -8,7 +8,7 @@
 #'
 #' @param f An absolute path to a todo.txt file (string).
 #'
-#' @return A tibble with the to dos loaded from file with variables as
+#' @return A tibble with the tasks loaded from file with variables as
 #' specified in [parse_prefixes()].
 #'
 #' @importFrom dplyr "%>%"

@@ -7,15 +7,15 @@
 parse_prefixes(todo)
 }
 \arguments{
-\item{todo}{A to do (string), or a vector of to dos.}
+\item{todo}{A task (string), or a vector of tasks.}
 }
 \value{
 A tibble with variables for creation date, completion date, and
-priority of a to do. The tibble also contains the (original) task (as on
+priority of a task. The tibble also contains the (original) task (as on
 file) and a "cleaned" version without aforementioned attributes.
 }
 \description{
-Parsing a to do's priority, creation and due date actually combines
+Parsing a task's priority, creation and due date actually combines
 elements that should be handled separately. However, the grep pattern
 that is used is quite useful and more difficult to strip into components.
 Additionally, these components are all prefixed before the actual task

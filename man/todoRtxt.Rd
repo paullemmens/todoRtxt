@@ -6,24 +6,29 @@
 \alias{todoRtxt-package}
 \title{todoRtxt: An R Parser And Interaction Toolkit For todo.txt Files}
 \description{
-\code{todo.txt} files are flat (ascii) text files containing a series of to dos
+\code{todo.txt} files are flat (ascii) text files containing a series of tasks
 complying to a format specified by Gina Trappani (see \link{todotxt.org}) that
 enables decorating a to with priority, due date, and tags for sorting and
 filtering.
 
 The \code{todoRtxt} R package provides a parser for such files as
-well as functions to add, update, delete, or cross out completed to dos.
+well as functions to add, update, delete, or cross out completed tasks.
 A Shiny app is provided that provides a (semi) GUI for these operations as
 well as an analytics engine for completed tasks.
 }
 \section{Overview}{
 
 A short section on how the package can be used.
+
+Note that the design of the todo.txt specification revolves around a single
+(set of) file(s) without means for synchronization across devices. Given
+the proliferation of cloud storage, clients can use such a solution to
+enable synchronizing on the level of a file. Typically Dropbox is used.
 }
 
 \section{Exported functions}{
 
-Loading one/more files, editing/modifying a to do.
+Loading one/more files, editing/modifying a task.
 }
 
 \section{Shiny app}{
