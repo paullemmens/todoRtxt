@@ -29,3 +29,19 @@ load_tasks <- function(f) {
 }
 
 
+#' @title Write A File With To Dos
+#'
+#' @author Paul Lemmens (paul.lemmens@gmail.com)
+#'
+#' @description
+#' empty
+#'
+#' @param foo
+#'
+#' @return bar
+#'
+#' @importFrom dplyr "%>%"
+#'
+#' @export
+write_tasks <- function() {
+}

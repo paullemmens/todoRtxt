@@ -3,4 +3,5 @@
 export(load_tasks)
 export(parse_task)
 export(parse_tasks)
+export(write_tasks)
 importFrom(dplyr,"%>%")
