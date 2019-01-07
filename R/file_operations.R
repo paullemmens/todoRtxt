@@ -46,5 +46,11 @@ write_tasks <- function(tasks, todo_file) {
 
   ## FIXME: expand to use tryCatch()es and a backup of the original file.
   ## for that use the fs package??
+
+  ## 1. Write new file to temp local location
+  ## 2. if successful temp file, then create backup copy of original
+  ## 3. overwrite original with new file from temp locatio
+  ## 4. remove backup of original
+
   writeLines(tasks, con = todo_file)
 }
