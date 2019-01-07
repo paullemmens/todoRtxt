@@ -43,5 +43,8 @@ load_tasks <- function(f) {
 #' @importFrom dplyr "%>%"
 #'
 #' @export
-write_tasks <- function() {
+write_tasks <- function(tasks, todo_file) {
+  stopifnot(length(tasks) > 0)
+
+  writeLines(tasks, con = todo_file)
 }
