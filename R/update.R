@@ -37,8 +37,8 @@ modify_task <- function(task, prop = NULL, value) {
   }
 
   task <- stringr::str_replace(task,
-                               pattern     = paste0(' ', prop, ':\\w+'),
-                               replacement = paste0(' ', value, ' '))
+                               pattern     = paste0(prop, ':[:graph:]+'),
+                               replacement = value)
 
   return(task)
 }
