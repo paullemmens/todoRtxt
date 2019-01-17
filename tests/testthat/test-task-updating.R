@@ -17,4 +17,27 @@ test_that("property modification works", {
   ## expect_equal(modify_property(tasks[1], prop = 'due:', value = ''), expected[4])
 })
 
+
+context("Modify task tags")
+
+tag_expected <- c('2018-12-12 my new task +job due:2019-01-12 @work',
+                  'another new task @home due:2019-01-11',
+                  'due:2019-01-14 what +tag i need to do +job')
+
+test_that('tag modification works', {
+  expect_equal(modify_tag(tasks[1], old = '+tag', new = '+job'), tag_expected[1])
+  expect_equal(modify_tag(tasks[2], old = '@work', new = '@home'), tag_expected[2])
 })
+
+test_that('tag addition works', {
+  expect_equal(modify_tag(tasks[3], old = '+tag', new = '+job +task'),
+               'due:2019-01-14 what +job +task i need to do +job')
+  expect_equal(modify_tag(tasks[3], old = '$', new = ' @work'),
+               'due:2019-01-14 what +tag i need to do +job @work')
+})
+
+test_that('removing a tag works', {
+  expect_equal(modify_tag(tasks[3], old = '+tag', new = ''),
+               'due:2019-01-14 what  i need to do +job')
+})
+

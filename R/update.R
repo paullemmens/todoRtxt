@@ -61,3 +61,33 @@ modify_property <- function(task, prop = NULL, value) {
 }
 
 
+#' @title Modify Task Tag(s)
+#'
+#' @author Paul Lemmens (paul.lemmens@gmail.com)
+#'
+#' @description
+#' This is a package internal function to modify tags of a task (in the
+#' todo.txt definition properties prefixed with `+` or `@`).
+#'
+#' Note that by suitably setting the `old` and `new` value, specific effects
+#' like removing a tag or adding an additional tag. For instance, by setting
+#' the `old` value to the end-of-line regular expression `$`, a tag can be
+#' appended. Note that this may result in adding superfluous spaces.
+#'
+#' @param task A string with one (or, as vector, one or more) task(s) that
+#'     follow(s) the todo.txt specification by Gina Trapani. When multiple 
+#'     tasks are provided, *all* tasks are modified in the same way.
+#' @param old Old tag to find and replace (a string).
+#' @param new New tag to replace the old value with. Note, could be multiple
+#'     new tags chained together `+new1 +new2` (a single string).
+#'
+#' @return the updated task(s)
+#'
+modify_tag <- function(task, old, new) {
+
+  ## Escape the plus character because it is a regex special.
+  old <- stringr::str_replace(old, '\\+', '\\\\+')
+
+  task <- stringr::str_replace(task, pattern = old, replacement = new)
+  return(task)
+}
