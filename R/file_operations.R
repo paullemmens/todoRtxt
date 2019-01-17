@@ -52,5 +52,8 @@ write_tasks <- function(tasks, todo_file) {
   ## 3. overwrite original with new file from temp locatio
   ## 4. remove backup of original
 
+  ## FIXME: check if it is feasible to (first) parse temporary (new) file to
+  ## validate new content against old changed content.
+
   writeLines(tasks, con = todo_file)
 }
