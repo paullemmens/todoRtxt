@@ -14,6 +14,7 @@ test_that("property modification works", {
   expect_equal(modify_property(tasks[1], prop = 'due:', value = '2020-12-31'), expected[1])
   expect_equal(modify_property(tasks[1], prop = 'due', value = '2020-12-31'), expected[1])
   expect_equal(modify_property(tasks, value = 'due:2020-12-31'), expected)
+  ## expect_equal(modify_property(tasks[1], prop = 'due:', value = ''), expected[4])
 })
 
 })
