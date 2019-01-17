@@ -21,6 +21,11 @@
 #' ascertain whether a property is a valid property of the (original)
 #' specification.
 #'
+#' Note that setting the property (of which always only one should exist
+#' in any given task) and new value suitable also enables deleting
+#' properties from a task. For instance, `modify_property(task, "due:", "")`
+#' removes the due date from a task. **Does not work yet.**
+#'
 #' @param task A string with one (or, as vector, one or more) task(s) that
 #'     follow(s) the todo.txt specification by Gina Trapani. When multiple 
 #'     tasks are provided, *all* tasks are modified in the same way.
