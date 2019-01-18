@@ -91,3 +91,44 @@ modify_tag <- function(task, old, new) {
   task <- stringr::str_replace(task, pattern = old, replacement = new)
   return(task)
 }
+
+
+#' @title Modify Task Priority
+#'
+#' @author Paul Lemmens (paul.lemmens@gmail.com)
+#'
+#' @description
+#' In the todo.txt format, tasks can be prioritized using a capital in round
+#' braces at the start of the task.
+#'
+#' @param task A string with one (or, as vector, one or more) task(s) that
+#'     follow(s) the todo.txt specification by Gina Trapani. When multiple 
+#'     tasks are provided, *all* tasks are modified in the same way.
+#' @param priority A string with the new priority to set. If a priority needs
+#'     to be removed, use the empty string.
+#'
+#' @return the updated task(s)
+#'
+modify_priority <- function(task, priority) {
+
+  ## Check compliance of priority: "([A-Z]) ".
+  if (priority != '') {
+    stopifnot(stringr::str_detect(priority, "([A-Z])"))
+    priority <- stringr::str_replace(priority, '\\(', '\\\\(')
+    priority <- stringr::str_replace(priority, '\\)', '\\\\)')
+    if (stringr::str_sub(priority, -1, -1) != ' ') {
+      priority <- paste0(priority, ' ')
+    }
+  }
+
+  ## If no priority there, then just prefix.
+  pat <- '^\\([A-Z]\\) '
+  if (!stringr::str_detect(task, pat)) {
+    pat <- '^'
+  }
+
+  task <- stringr::str_replace(task, pattern = pat, replacement = priority)
+
+  return(task)
+}
+

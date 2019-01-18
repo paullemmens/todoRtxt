@@ -41,3 +41,29 @@ test_that('removing a tag works', {
                'due:2019-01-14 what  i need to do +job')
 })
 
+
+context("Modify task priority")
+
+tasks <- c('(A) my high priority task @work due:2019-01-17 +mup',
+           '(Z) low priority',
+           'no priority')
+
+expected <- c('(B) my high priority task @work due:2019-01-17 +mup',
+              'low priority',
+              '(C) no priority')
+
+test_that('Updating existing priority works', {
+  expect_equal(modify_priority(tasks[1], '(B)'), expected[1])
+  expect_equal(modify_priority(tasks[1], '(B) '), expected[1])
+})
+
+test_that('Removing priority works', {
+  expect_equal(modify_priority(tasks[2], ''), expected[2])
+  expect_equal(modify_priority(tasks[3], ''), tasks[3])
+})
+
+test_that('Adding priority works', {
+  expect_equal(modify_priority(tasks[3], '(C)'), expected[3])
+  expect_equal(modify_priority(tasks[3], '(C) '), expected[3])
+})
+
