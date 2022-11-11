@@ -3,7 +3,6 @@
 \docType{package}
 \name{todoRtxt}
 \alias{todoRtxt}
-\alias{todoRtxt-package}
 \title{todoRtxt: An R Parser And Interaction Toolkit For todo.txt Files}
 \description{
 \code{todo.txt} files are flat (ascii) text files containing a series of tasks

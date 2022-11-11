@@ -2,18 +2,17 @@
 % Please edit documentation in R/file_operations.R
 \name{write_tasks}
 \alias{write_tasks}
-\title{Write A File With To Dos}
+\title{Write A File With Tasks}
 \usage{
-write_tasks()
+write_tasks(tasks, todo_file)
 }
 \arguments{
-\item{foo}{}
-}
-\value{
-bar
+\item{tasks}{A vector of strings representing tasks following the
+todo.txt convention by Gina Trapani.}
 }
 \description{
-empty
+Writing a set of tasks to file comprises writing all entries in the \code{task}
+variable in a tibble produced by \code{\link[=parse_tasks]{parse_tasks()}}.
 }
 \author{
 Paul Lemmens (paul.lemmens@gmail.com)

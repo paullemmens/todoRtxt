@@ -14,7 +14,7 @@ The recurrence setting for a task as string.
 }
 \description{
 A further extension of the original specification is setting a
-recurrence of a task using the prefix \code{rec:}. A recurrence is set in
+recurrence of a task using the prefix \verb{rec:}. A recurrence is set in
 N days, weeks, months, or years. When N is preceded by a plus, it says to
 start the recurrence calculation by the original due date or by today's
 date.

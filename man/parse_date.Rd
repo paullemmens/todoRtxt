@@ -18,12 +18,12 @@ is a valid date stamp; if it is not, NA is returned.
 }
 \description{
 Following the official definition from Gina Trapani, a task can have a due
-date only. This due date is indicated with the string \code{due:} immediately
+date only. This due date is indicated with the string \verb{due:} immediately
 (i.e., no space) followed by a date in ISO format (yyyy-mm-dd).
 
 Extensions of the todo.txt format also specify a start date for a task also
 frequently referred to as threshold date: the date when a task should appear
-on a list or in a view. Typically \code{t:} is used for indicating a threshold
+on a list or in a view. Typically \verb{t:} is used for indicating a threshold
 date.
 
 Due dates and threshold dates should appear only once in any task. So only

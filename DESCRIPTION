@@ -11,8 +11,10 @@ Description: The todoRtxt package provides a parser to read todo.txt files
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Imports:
+    dplyr
 Suggests: 
     testthat
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.1
 URL: https://paullemmens.github.io/todoRtxt/

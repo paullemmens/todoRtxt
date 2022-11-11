@@ -19,11 +19,11 @@ A tibble with a parsed task.
 This function parses one task, or a "list" (read, a vector of task
 strings) in its entirety. A task is specified following the definition(s)
 by Gina Trapani via todotxt.org and comprising a creation date as first
-item on a line, a due date marked using \code{due:}, and a priority at the start
+item on a line, a due date marked using \verb{due:}, and a priority at the start
 of each line as \code{(X)}. Tags are indicated using either an \code{@} for
 (typically) contexts and a plus \code{+} for projects. Optional components
 comprise a recurrence specified
-using \code{rec:} as extension of the original todo.txt specification (see
+using \verb{rec:} as extension of the original todo.txt specification (see
 documentation of the android app SimpleTask).
 }
 \author{
