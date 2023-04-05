@@ -20,7 +20,7 @@ load_tasks <- function(f) {
 
   todo <- parse_tasks(raw)
   todo <- todo %>%
-    dplyr::mutate(tid = 1:n())
+    dplyr::mutate(tid = 1:dplyr::n())
 
   ## Add our package as class to define printing methods.
   class(todo) <- append('todoRtxt', class(todo))
