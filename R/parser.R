@@ -124,9 +124,10 @@ parse_recurrence <- function(todo) {
 parse_prefixes <- function(todo) {
   prefix_pattern <- '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)' # nolint
 
-  prefixes <- tibble::as.tibble(stringr::str_match(todo, pattern = prefix_pattern))
   names(prefixes)[-6] <- c('task', 'done', 'priority', 'date_completed',
                            'date_created', 'task_cleaned')
+  prefixes <- tibble::as_tibble(stringr::str_match(todo, pattern = prefix_pattern),
+                                .name_repair = ~ vctrs::vec_as_names(..., repair = "unique", quiet = TRUE)) # nolint
 
   prefixes <- prefixes %>%
     dplyr::select(-V6) %>%
