@@ -122,18 +122,19 @@ parse_recurrence <- function(todo) {
 #' https://github.com/mpcjanssen/simpletask-android/blob/197bd51f496bd6066df902445acc28df51910d60/src/main/java/nl/mpcjanssen/simpletask/task/Task.java
 #'
 parse_prefixes <- function(todo) {
-  prefix_pattern <- '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)'
+  prefix_pattern <- '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)' # nolint
 
-  prefixes <- tibble::as.tibble(stringr::str_match(todo, pattern = prefix_pattern))
-  names(prefixes)[-6] <- c('task', 'done', 'priority', 'date_completed',
-                           'date_created', 'task_cleaned')
+  prefixes <- tibble::as_tibble(stringr::str_match(todo, pattern = prefix_pattern),
+                                .name_repair = ~ vctrs::vec_as_names(..., repair = "unique", quiet = TRUE)) # nolint
+  names(prefixes) <- c('task', 'done', 'priority', 'date_completed', 'date_created',
+                       'V6', 'task_cleaned')
 
   prefixes <- prefixes %>%
     dplyr::select(-V6) %>%
     dplyr::mutate(date_created   = dplyr::if_else(is.na(done), date_completed, date_created),
                   date_completed = dplyr::if_else(is.na(done), NA_character_,  date_completed)) %>%
-    dplyr::mutate_at(dplyr::vars(dplyr::starts_with('date_')),
-                     dplyr::funs(lubridate::ymd(., quiet = FALSE)))
+    dplyr::mutate(dplyr::across(dplyr::starts_with('date_'),
+                                ~ lubridate::ymd(., quiet = FALSE)))
 
   return(prefixes)
 }
