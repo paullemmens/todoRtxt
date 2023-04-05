@@ -133,8 +133,8 @@ parse_prefixes <- function(todo) {
     dplyr::select(-V6) %>%
     dplyr::mutate(date_created   = dplyr::if_else(is.na(done), date_completed, date_created),
                   date_completed = dplyr::if_else(is.na(done), NA_character_,  date_completed)) %>%
-    dplyr::mutate_at(dplyr::vars(dplyr::starts_with('date_')),
-                     dplyr::funs(lubridate::ymd(., quiet = FALSE)))
+    dplyr::mutate(dplyr::across(dplyr::starts_with('date_'),
+                                ~ lubridate::ymd(., quiet = FALSE)))
 
   return(prefixes)
 }
