@@ -103,7 +103,7 @@ test_that('prefixes are parsed correctly', {
   expected <- structure(list(task = c("x 2018-12-12 2018-12-10 x y z", "(A) 2018-12-10 a b c",
                                       "2018-12-12 def", "a b c @context"),
                              done = c("x ", NA, NA, NA),
-                             priority = c(NA, "(A) ", NA, NA),
+                             priority = c(NA, "A", NA, NA),
                              date_completed = structure(c(17877, NA, NA, NA), class = "Date"),
                              date_created = structure(c(17875, 17875, 17877, NA), class = "Date"),
                              task_cleaned = c("x y z", "a b c", "def", "a b c @context")),
