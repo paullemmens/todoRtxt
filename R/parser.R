@@ -122,7 +122,7 @@ parse_recurrence <- function(todo) {
 #' https://github.com/mpcjanssen/simpletask-android/blob/197bd51f496bd6066df902445acc28df51910d60/src/main/java/nl/mpcjanssen/simpletask/task/Task.java
 #'
 parse_prefixes <- function(todo) {
-  prefix_pattern <- '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)'
+  prefix_pattern <- '(^x )?(\\([A-Z]\\) )?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)?(\\d{4}-\\d{2}-\\d{2} +)*(.*)' # nolint
 
   prefixes <- tibble::as.tibble(stringr::str_match(todo, pattern = prefix_pattern))
   names(prefixes)[-6] <- c('task', 'done', 'priority', 'date_completed',
