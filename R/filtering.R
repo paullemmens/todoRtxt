@@ -10,8 +10,6 @@
 #'
 #' @return A vector of (cleaned) tags.
 #'
-#' @importFrom dplyr "%>%"
-#'
 #' @export
 list_tags <- function(tasks, type) {
   res <- dplyr::case_when(
