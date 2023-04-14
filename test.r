@@ -23,3 +23,10 @@ source('view.todoRtxt.r')
 tv()
 
 subset(tags, grepl('+hhs', tags))
+
+
+##
+library(tidyverse)
+devtools::load_all()
+loc <- '~/nextcloud/todo/todo.txt'
+tasks <- load_tasks(loc)
