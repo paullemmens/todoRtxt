@@ -25,3 +25,36 @@ list_tags <- function(tasks, type) {
 
   return(unique(res))
 }
+
+#' @title Filter Tasks On Contexts or Lists/Projects
+#'
+#' @description Tasks contain (multiple) tags as a list. This function
+#'    enables filtering these tasks on particular tags. Tags here are
+#'    either contexts (prefixed with an `@`) or lists (also referred to
+#'    as lists with `+`).
+#'
+#'    Proposed usage (to explain the naming) is
+#'    `dplyr::filter(on_context('@home'))` or similarly
+#'    `on_tag('+list')`.
+#'
+#' @param pattern Pattern to filter on. Should use the common prefix of
+#'    each tag (i.e. for contexts the `@` and lists/projects a `+`).
+#' @param type An indicator for the type of tag.
+#'
+#' @return A boolean vector of length of the number of rows in tasks.
+#'
+#' @importFrom dplyr "%>%"
+#'
+on_tag <- function(pattern) {
+}
+
+#' @export
+on_context <- function(pattern) {
+  on_tag(pattern = pattern, type = 'context')
+}
+
+#' @export
+on_list <- function(pattern) {
+  on_tag(pattern = pattern, type = 'list')
+}
+on_project <- on_list
