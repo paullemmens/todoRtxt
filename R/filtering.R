@@ -32,6 +32,26 @@ extract_tags <- function(tag_list, type) {
   return(unique(res))
 }
 
+
+#' @title Find Index of Tag in List of Tags
+#'
+#' @description
+#'    Finds the index of a particular tag in a list of tags wherein the
+#'    list might also contain vectors. This function helps to find row
+#'    indices for later filtering functions.
+#'
+#' @inheritParams extract_tags
+#' @param tag Simple string of one tag to find in the `tag_list`.
+#'
+#' @return A boolean vector for the list indices that contain `tag`.
+#'
+#' @export
+find_tag <- function(tag_list, tag) {
+
+  purrr::map_lgl(tag_list, ~ purrr::has_element(.x = .x, .y = tag))
+}
+
+
 #' @title Filter Tasks On Contexts or Lists/Projects
 #'
 #' @description Tasks contain (multiple) tags as a list. This function

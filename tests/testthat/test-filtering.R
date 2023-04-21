@@ -24,3 +24,15 @@ test_that('tags are found', {
   expect_identical(extract_tags(todo3, '+'), res3b)
   expect_identical(extract_tags(todo3, 'project'), res3b)
 })
+
+test_that('tags can be listed', {
+  todo <- list('@home', c('@home', '@work'), '+list', '', NA,
+               c('@home', '+project'), c('+list', '+project'))
+  res1 <- c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE)
+  res2 <- c(FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE)
+  res3 <- c(FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE)
+
+  expect_identical(find_tag(todo, '@home'), res1)
+  expect_identical(find_tag(todo, '+list'), res2)
+  expect_identical(find_tag(todo, '+project'), res3)
+})
