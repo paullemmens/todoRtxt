@@ -20,3 +20,11 @@ Finds the index of a particular tag in a list of tags wherein the
 list might also contain vectors. This function helps to find row
 indices for later filtering functions.
 }
+\examples{
+todo <- c('x 2018-12-12 2018-12-10 x y z @home +list',
+          '(A) 2018-12-10 a b c @home @work',
+          '2018-12-12 def +list',
+          'a b c @context +list +project')
+parse_tasks(todo) \%>\% filter(find_tag(context, '@home'))
+
+}

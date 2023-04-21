@@ -45,6 +45,13 @@ extract_tags <- function(tag_list, type) {
 #'
 #' @return A boolean vector for the list indices that contain `tag`.
 #'
+#' @examples
+#' todo <- c('x 2018-12-12 2018-12-10 x y z @home +list',
+#'           '(A) 2018-12-10 a b c @home @work',
+#'           '2018-12-12 def +list',
+#'           'a b c @context +list +project')
+#' parse_tasks(todo) %>% filter(find_tag(context, '@home'))
+#'
 #' @export
 find_tag <- function(tag_list, tag) {
 
