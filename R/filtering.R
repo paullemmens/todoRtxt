@@ -1,25 +1,33 @@
-#' @title List All Tags
+#' @title Extract Unique Tags
 #'
 #' @description The todo.txt specification uses `@...` to refer to contexts
 #'    and `+...` for lists. This function extracts all (unique) contexts
 #'    or lists from the todo.txt file.
 #'
-#' @param tasks A tibble with tasks as produced by [`parse_tasks`]. **FIXME**
+#' @param tag_list A list of strings or vectors of strings representing tasks'
+#'    tags (with vectors for tasks with multiple tags).
 #' @param type A string to indicate whether to list contexts or lists.
 #'    Should be one of `c('context', '@', 'list', 'project', '+')`.
 #'
 #' @return A vector of (cleaned) tags.
 #'
 #' @export
-list_tags <- function(tasks, type) {
-  res <- dplyr::case_when(
-    type == '@'       ~ purrr::list_flatten(tasks$context),
-    type == 'context' ~ purrr::list_flatten(tasks$context),
-    type == '+'       ~ purrr::list_flatten(tasks$project),
-    type == 'list'    ~ purrr::list_flatten(tasks$project),
-    type == 'project' ~ purrr::list_flatten(tasks$project),
-  )
+extract_tags <- function(tag_list, type) {
+
+  stopifnot(type %in% c('@', 'context', '+', 'list', 'project'))
+
+  res <- purrr::list_flatten(tag_list)
   res <- purrr::list_c(res)
+
+  if (type %in% c('@', 'context')) {
+    res <- res[which(grepl('^@', res))]
+  } else if (type %in% c('+', 'list', 'project')) {
+    res <- res[which(grepl('^\\+', res))]
+  }
+
+  ## Explicitly/deliberately set NULL results to NA.
+  if (length(res) == 0)
+    res <- NA_character_
 
   return(unique(res))
 }
