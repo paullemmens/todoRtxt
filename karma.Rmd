@@ -31,13 +31,21 @@ tl <- bind_rows(tasks, done, done_old)
 # Tasks completed per week
 
 ```{r completed-per-week}
-tl %>% mutate(week = format(d.compl, '%V')) %>% filter(!is.na(done)) %>%
-  group_by(week) %>% summarize(taskcount = n()) %>% filter(!is.na(week)) %>%
-  ggplot(mapping = aes(x = week, y = taskcount)) +
-    geom_line(aes(group = 1), size = 1.2) +
-    labs(x = 'Week number', y = 'Number of task completed',
+tl %>%
+  mutate(week = as.numeric(format(date_completed, '%V')),
+         year = as.numeric(format(date_created, '%Y'))) %>%
+  filter(!is.na(done)) %>%
+  count(year, week) %>%
+  filter(!is.na(week)) %>%
+  ggplot(mapping = aes(x = week, y = n)) +
+    geom_line(aes(group = 1), size = 1.0) +
+    facet_wrap(~ year) +
+    labs(x = '\nWeek number', y = 'Number of task completed\n',
          title = 'Number of tasks completed per week\n') +
-    mytheme + theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+    theme_lemmens +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
 
 # This is more complicated because of the tasks having multiple lists or tags.
 tl %>% mutate(week = format(d.compl, '%V')) %>% filter(is.na(done), !is.na(week)) %>%
