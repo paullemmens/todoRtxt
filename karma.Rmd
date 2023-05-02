@@ -73,3 +73,17 @@ tl %>% filter(!is.na(done)) %>%
 lag between due and done
 
 
+# Topics
+
+```{r topics-over-time, eval = F}
+tl %>%
+  mutate(week = format(date_created, '%V'),
+         year = format(date_created, '%Y')) %>%
+  mutate(yw = as.numeric(paste0(year, week))) %>%
+  group_by_context() %>%
+    group_by_project() %>%
+      ggplot(mapping = aes(x = yw, y = project, colour = context)) +
+        geom_line() +
+        labs(x = '\nDate', y = 'Project tag\n') +
+        theme_lemmens + lemmens_brewer()
+```
