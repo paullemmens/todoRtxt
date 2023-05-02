@@ -26,3 +26,21 @@ fo_unnest_tag <- function(f, tag, ...) {
 }
 
 
+#' @title Group Tasks by Their Context
+#'
+#' @description Note that grouping by multiple (types of) tags is
+#'    accomplished by chaining [`group_by_context`] and
+#'    [`group_by_project`].
+#'
+#' @export
+group_by_context <- fo_unnest_tag(f = dplyr::group_by, tag = context)
+
+
+#' @title Group Tasks by Their List / Project
+#'
+#' @description Note that grouping by multiple (types of) tags is
+#'    accomplished by chaining [`group_by_context`] and
+#'    [`group_by_project`].
+#'
+#' @export
+group_by_project <- fo_unnest_tag(f = dplyr::group_by, tag = project)
