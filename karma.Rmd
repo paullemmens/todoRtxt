@@ -1,12 +1,16 @@
 ---
 title: 'Overview of todo performance alla Todoist Karma'
 output:
-  knitrBootstrap::bootstrap_document:
-    theme: default
-    highlight: 'visual studio'
-    theme.chooser: false
-    highlight.chooser: false
-    clean_supporting: true
+  rmdformats::html_clean:
+    number_sections: false
+    theme: paper
+    highlight: default
+    dev: svg
+    df_print: kable
+    code_folding: show
+    fig_width: 16
+    self_contained: true
+    gallery: true
 ---
 
 ```{r set-options-read-chunks, echo=FALSE, message=FALSE, warning=FALSE, bootstrap.show.code = FALSE}
