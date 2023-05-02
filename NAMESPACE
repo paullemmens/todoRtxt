@@ -2,6 +2,9 @@
 
 export(extract_tags)
 export(find_tag)
+export(fo_unnest_tag)
+export(group_by_context)
+export(group_by_project)
 export(load_tasks)
 export(parse_task)
 export(parse_tasks)
