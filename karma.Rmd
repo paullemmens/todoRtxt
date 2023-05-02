@@ -46,7 +46,14 @@ tl %>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 ```
 
+FIXME: build function to fill years / weeks before plotting (in particular but also useful in general)
 
+build something to group by contexts and projects (or tags in general) to facilitate plotting and doing stuff
+per context.
+
+Discovered that I've seem to lost about two and a half years worth of old tasks.
+
+```{r completed-per-week-context, eval = F}
 # This is more complicated because of the tasks having multiple lists or tags.
 tl %>% mutate(week = format(d.compl, '%V')) %>% filter(is.na(done), !is.na(week)) %>%
   group_by(lst, tag, week) %>% summarize(taskcount = n()) %>%
@@ -65,9 +72,9 @@ lag between entered and due
 # Timeliness of completion
 
 ```{r due-done-lag}
-require(magrittr)
-tl %>% filter(!is.na(done)) %>% 
-  mutate(due.lag = due - d.compl) %>%
+tl %>%
+  filter(!is.na(done)) %>% 
+  mutate(due_lag = date_completed - date_due) %>%
   group_by(lst, tag) %>% use_series(due.lag)  %>% mean_cl_boot(due.lag)
 ```
 lag between due and done
