@@ -12,27 +12,20 @@ output:
 ```{r set-options-read-chunks, echo=FALSE, message=FALSE, warning=FALSE, bootstrap.show.code = FALSE}
 knitr::opts_chunk$set(results = 'markup', echo=FALSE, message=FALSE, warning=TRUE, dev=c('CairoSVG'), 
                       bootstrap.show.code=FALSE)
-rm(list=ls())
 options(width=120)
-library(Cairo)
-library(stringr)
+library(tidyverse)
 library(ggplot2)
-library(scales)
-library(dplyr)
-library(reshape2)
-mygeoms(use=FALSE)
+library(lemmens)
+devtools::load_all()
 palette <- 'Dark2'
 ```
 
 ```{r load-data}
-source('file.loading.r')
-source('todotxt.parsing.r')
-todo.dir <- 'C:/nlv19419/Box Sync/todo'
-todo.raw <- load.todo(path = todo.dir)
-done.raw <- load.done(path = todo.dir)
-tasks <- parse.todotxt(todo.raw)
-done <- parse.todotxt(done.raw)
-tl <- rbind(tasks, done)
+loc <- '~/nextcloud/todo/'
+tasks <- load_tasks(file.path(loc, 'todo.txt'))
+done <- load_tasks(file.path(loc, 'done.txt'))
+done_old <- load_tasks(file.path(loc, 'done - 2018-07-21.txt'))
+tl <- bind_rows(tasks, done, done_old)
 ```
 
 # Tasks completed per week
