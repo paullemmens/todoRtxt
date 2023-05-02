@@ -75,7 +75,7 @@ lag between entered and due
 
 # Timeliness of completion
 
-```{r due-done-lag}
+```{r due-done-lag, eval = F}
 tl %>%
   filter(!is.na(done)) %>% 
   mutate(due_lag = date_completed - date_due) %>%
@@ -86,7 +86,7 @@ lag between due and done
 
 # Topics
 
-```{r topics-over-time, eval = F}
+```{r topics-over-time}
 tl %>%
   mutate(week = format(date_created, '%V'),
          year = format(date_created, '%Y')) %>%
