@@ -14,8 +14,8 @@ output:
 ---
 
 ```{r set-options-read-chunks, echo=FALSE, message=FALSE, warning=FALSE, bootstrap.show.code = FALSE}
-knitr::opts_chunk$set(results = 'markup', echo=FALSE, message=FALSE, warning=TRUE, dev=c('CairoSVG'), 
-                      bootstrap.show.code=FALSE)
+knitr::opts_chunk$set(results = 'markup', echo=TRUE, message=FALSE, warning=FALSE, dpi = 600,
+                      fig.asp = 0.618)
 options(width=120)
 library(tidyverse)
 library(ggplot2)
