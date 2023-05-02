@@ -17,7 +17,7 @@ fo_unnest_tag <- function(f, tag, ...) {
   force(f)
 
   fo_f <- function(dfr, ...) {
-     d <- tidyr::unnest(dfr, cols = {{ tag }} )
+     d <- tidyr::unnest(dfr, cols = {{ tag }}, keep_empty = TRUE)
      res <- f(d, {{ tag }}, ...)
      return(res)
   }
