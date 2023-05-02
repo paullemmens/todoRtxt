@@ -86,7 +86,7 @@ lag between due and done
 
 # Topics
 
-```{r topics-over-time}
+```{r topics-over-time, fig.height = 9}
 tl %>%
   mutate(week = format(date_created, '%V'),
          year = format(date_created, '%Y')) %>%
@@ -95,6 +95,7 @@ tl %>%
     group_by_project() %>%
       ggplot(mapping = aes(x = yw, y = project, colour = context)) +
         geom_line() +
-        labs(x = '\nDate', y = 'Project tag\n') +
-        theme_lemmens + lemmens_brewer()
+        labs(x = '\nYearWeek#', y = 'Project tag\n') +
+        theme_lemmens + lemmens_brewer() +
+        theme(axis.text.y = element_text(size = rel(0.5)))
 ```
