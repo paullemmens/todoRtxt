@@ -55,7 +55,7 @@ tl %>%
 
 Discovered that I've seem to lost about two and a half years worth of old tasks.
 
-```{r completed-per-week-context, eval = F}
+```{r completed-per-week-context}
 n_colors <- tl %>% group_by_context() %>% distinct(context) %>% nrow()
 long_palette <- colorRampPalette(RColorBrewer::brewer.pal(9, "Set1"))(n_colors)
 tl %>%
@@ -69,8 +69,6 @@ tl %>%
     facet_wrap(~ year) +
     labs(x = 'Week number', y = 'Number of task completed',
          title = 'Number of tasks completed per week\n') +
-#tl %>% mutate() %>% group_by(list, tag, week) %>% summarize(no.tasks = n()) %>%
-#  ggplot()
     scale_colour_manual(values = long_palette) +
     guides(colour = guide_legend(nrow = 2)) +
     theme_lemmens
