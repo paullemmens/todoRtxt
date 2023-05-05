@@ -40,11 +40,11 @@ tl %>%
          year = as.numeric(format(date_completed, '%Y'))) %>%
   filter(!is.na(done)) %>%
   count(year, week) %>%
-  filter(!is.na(week)) %>%
   ## mutate(year = full_seq(unique(year), period = 1)) %>% print(n = 600)
   ## FIXME: build function to fill years / weeks before plotting (in particular but also useful in general)
   ## mutate(year = full_seq(year, period = 1)) %>% print(n = 600)
   ## complete(year, week)
+  filter(!is.na(week) | !is.na(year)) %>%
   ggplot(mapping = aes(x = week, y = n)) +
     geom_line(aes(group = 1), size = 1.0) +
     facet_wrap(~ year) +
