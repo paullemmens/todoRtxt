@@ -54,17 +54,17 @@ tl %>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 ```
 
-build something to group by contexts and projects (or tags in general) to facilitate plotting and doing stuff
-per context.
-
 Discovered that I've seem to lost about two and a half years worth of old tasks.
 
 ```{r completed-per-week-context, eval = F}
-# This is more complicated because of the tasks having multiple lists or tags.
-tl %>% mutate(week = format(d.compl, '%V')) %>% filter(is.na(done), !is.na(week)) %>%
-  group_by(lst, tag, week) %>% summarize(taskcount = n()) %>%
-  ggplot(mapping = aes(x = week, y = taskcount, colour = tag, linetype = list)) +
     geom_line(size = 1.2) +
+tl %>%
+  mutate(week = as.numeric(format(date_completed, '%V')),
+         year = as.numeric(format(date_completed, '%Y'))) %>%
+  filter(!is.na(done)) %>%
+  group_by_context() %>%
+    count(context, year, week) %>%
+  ggplot(mapping = aes(x = week, y = n, colour = context)) + #, linetype = project)) +
     labs(x = 'Week number', y = 'Number of task completed',
          title = 'Number of tasks completed per week\n') +
     scale_colour_brewer(type = 'qual', palette = palette) +
