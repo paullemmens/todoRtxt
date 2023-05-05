@@ -37,7 +37,7 @@ tl <- bind_rows(tasks, done, done_old)
 ```{r completed-per-week}
 tl %>%
   mutate(week = as.numeric(format(date_completed, '%V')),
-         year = as.numeric(format(date_created, '%Y'))) %>%
+         year = as.numeric(format(date_completed, '%Y'))) %>%
   filter(!is.na(done)) %>%
   count(year, week) %>%
   filter(!is.na(week)) %>%
@@ -53,8 +53,6 @@ tl %>%
     theme_lemmens +
     theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 ```
-
-FIXME: build function to fill years / weeks before plotting (in particular but also useful in general)
 
 build something to group by contexts and projects (or tags in general) to facilitate plotting and doing stuff
 per context.
