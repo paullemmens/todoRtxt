@@ -19,6 +19,7 @@ knitr::opts_chunk$set(results = 'markup', echo=TRUE, message=FALSE, warning=FALS
 options(width=120)
 library(tidyverse)
 library(ggplot2)
+library(patchwork)
 library(lemmens)
 devtools::load_all()
 palette <- 'Dark2'
@@ -78,13 +79,36 @@ lag between entered and due
 
 # Timeliness of completion
 
-```{r due-done-lag, eval = F}
-tl %>%
-  filter(!is.na(done)) %>% 
-  mutate(due_lag = date_completed - date_due) %>%
-  group_by(lst, tag) %>% use_series(due.lag)  %>% mean_cl_boot(due.lag)
+Not too large of a distance between actual completing a task versus when it should have been completed; i.e.
+relatively few delays/lags.
+
+```{r due-done-lag}
+due_done <- tl %>%
+  filter(!is.na(done)) %>%
+  mutate(due_lag = date_completed - date_due)
+p1 <- due_done %>%
+  ggplot(mapping = aes(x = due_lag)) +
+    geom_histogram(binwidth = 1) +
+    theme_lemmens
+  ## group_by(lst, tag) %>% use_series(due.lag)  %>% mean_cl_boot(due.lag)
+p2 <- p1 %+% (due_done %>% filter(due_lag >= 0)) +
+  coord_cartesian(xlim = c(0, 50))
+p3 <- p1 %+% (due_done %>% filter(due_lag >= 1)) +
+  coord_cartesian(xlim = c(0, 50))
+p1 + p2 + p3
 ```
-lag between due and done
+
+```{r due-done-by-context}
+due_done %>%
+  group_by_context() %>%
+  filter(due_lag >= 1) %>%
+  ggplot(mapping = aes(x = due_lag, fill = context)) +
+    geom_histogram(binwidth = 1) +
+    scale_fill_manual(values = long_palette) +
+    coord_cartesian(xlim = c(0, 50)) +
+    theme_lemmens
+```
+
 
 
 # Topics
@@ -96,6 +120,7 @@ tl %>%
   mutate(yw = as.numeric(paste0(year, week))) %>%
   group_by_context() %>%
     group_by_project() %>%
+      filter(!is.na(context) | !is.na(project)) %>%
       ggplot(mapping = aes(x = yw, y = project, colour = context)) +
         geom_line() +
         labs(x = '\nYearWeek#', y = 'Project tag\n') +
