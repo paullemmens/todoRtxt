@@ -75,7 +75,21 @@ tl %>%
     theme_lemmens
 ```
 
-lag between entered and due
+# Creation / due
+
+```{r create-due-lag}
+create_due <- tl %>%
+  filter(!is.na(date_created) & !is.na(date_due)) %>%
+  mutate(create_lag = date_due - date_created)
+create_due %>%
+  group_by_context() %>%
+  ggplot(mapping = aes(x = create_lag, fill = context)) +
+    geom_histogram(binwidth = 1) +
+    scale_fill_manual(values = long_palette) +
+    coord_cartesian(xlim = c(0, 50)) +
+    theme_lemmens
+```
+
 
 # Timeliness of completion
 
