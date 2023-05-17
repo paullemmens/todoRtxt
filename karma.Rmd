@@ -45,8 +45,8 @@ dat <- tl %>%
   filter(!is.na(year) | !is.na(week))
 
 dat %>%
-  full_join(y = tibble(year = full_seq(as_vector(distinct(dat, year)), period = 1)), by = 'year') %>%
-  complete(year, week) %>%# pull(year) %>% unique() %>% sort()
+  complete_years() %>%
+  complete(year, week) %>%
   ggplot(mapping = aes(x = week, y = n)) +
     geom_line(aes(group = 1), linewidth = 1.0, na.rm = FALSE) +
     facet_wrap(~ year) +
