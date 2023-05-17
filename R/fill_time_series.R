@@ -1,27 +1,27 @@
-#' @title Complete Year-Week Time Series
+#' @title Complete Years Time Series
 #'
-#' Fills gaps in time series data that might occur due to missing data
-#' or dates in task lists.
+#' @description Fills gaps in time series data of years that might occur due to missing
+#' data or dates in task lists.
 #'
-#' @param tasks A list of tasks that has a year and week variable.
-#' @param date_col A bare column to do calculations on to create
-#'    reference calendar.
+#' @param dfr A data frame with a column for year numbers.
+#' @param year_col A bare column name (defaults to year) to expand to a full
+#'    sequence of year numbers.
 #'
-#' @return An expanded list of tasks with year and week number variables
-#'    that is complete for 52 (or 53) weeks per each of the years.
+#' @return The expanded `dfr` with a column variable `year_col` that contains
+#'    a full sequence of year numbers.
 #'
 #' @importFrom dplyr %>%
 #
 #' @export
-complete_year_week <- function(tasks, date_col) {
+complete_years <- function(dfr, year_col = year) {
 
-  min_year <- lubridate::year(min(tasks[ {{ date_col }} ]))
-  max_year <- lubridate::year(max(tasks[ {{ date_col }} ]))
-  cal <- tasks %>%
-    dplyr::select( {{ date_col }} ) %>%
-    dplyr::complete(cal = seq.Date(from = lubridate::ymd(paste(c(min_year, 1, 1), collapse = '-')),
-                                   to   = lubridate::ymd(paste(c(min_year, 12, 31), collapse = '-')),
-                                   by   = 'day'))
+  years_observed <- dplyr::distinct(dfr, {{ year_col}} ) %>% pull( {{ year_col}} )
+  all_years <- tidyr::full_seq(years_observed, period = 1)
 
-  return(full_join(x = tasks, y = cal, by = {{ date_col }} ))
+  full_dfr <- dplyr::full_join(x = dfr,
+                               y = tibble( {{ year_col }} := all_years),
+                               ## Use non-idiomatic way because idiomatic rlang won't fly
+                               by = deparse(substitute(year_col)))
+
+  return(full_dfr)
 }
