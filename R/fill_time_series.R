@@ -19,7 +19,7 @@ complete_years <- function(dfr, year_col = year) {
   all_years <- tidyr::full_seq(years_observed, period = 1)
 
   full_dfr <- dplyr::full_join(x = dfr,
-                               y = tibble( {{ year_col }} := all_years),
+                               y = tibble::tibble( {{ year_col }} := all_years),
                                ## Use non-idiomatic way because idiomatic rlang won't fly
                                by = deparse(substitute(year_col)))
 
